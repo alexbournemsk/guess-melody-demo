@@ -1,13 +1,23 @@
 import {Navigate} from 'react-router-dom';
 import {RouteProps} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 type PrivateRouteProps = RouteProps & {
-  authorizationStatus: AuthorizationStatus;
   children: JSX.Element;
 }
 
-function PrivateRoute(props: PrivateRouteProps): JSX.Element {
+const mapStateToProps = ({authorizationStatus}: State) => ({
+  authorizationStatus,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & PrivateRouteProps;
+
+function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
   const {authorizationStatus, children} = props;
 
   return (
@@ -17,4 +27,5 @@ function PrivateRoute(props: PrivateRouteProps): JSX.Element {
   );
 }
 
-export default PrivateRoute;
+export {PrivateRoute};
+export default connector(PrivateRoute);
