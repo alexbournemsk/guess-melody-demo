@@ -1,8 +1,7 @@
 import {Navigate} from 'react-router-dom';
 import {RouteProps} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
 // import {History} from 'history';
-import {State} from '../../types/state';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
@@ -11,22 +10,12 @@ import {getAuthorizationStatus} from '../../store/user-process/selectors';
 // }
 
 type PrivateRouteProps = RouteProps & {
-  children: JSX.Element;
-  // render: (props: RenderFuncProps) => JSX.Element;
-  authorizationStatus: AuthorizationStatus;
+  children: JSX.Element
 }
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & PrivateRouteProps;
-
-function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
-  const {authorizationStatus, children} = props;
+function PrivateRoute(props: PrivateRouteProps): JSX.Element {
+  const {children} = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     authorizationStatus === AuthorizationStatus.Auth
@@ -45,5 +34,4 @@ function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {PrivateRoute};
-export default connector(PrivateRoute);
+export default PrivateRoute;
