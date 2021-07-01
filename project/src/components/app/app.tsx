@@ -1,5 +1,5 @@
 import {connect, ConnectedProps} from 'react-redux';
-import {Route, Router as BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, MAX_MISTAKE_COUNT} from '../../const';
 import WelcomeScreen from '../welcome-screen/welcome-screen';
 import AuthScreen from '../auth-screen/auth-screen';
@@ -11,7 +11,6 @@ import GameScreen from '../game-screen/game-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {isCheckedAuth} from '../../game';
 import {State} from '../../types/state';
-import browserHistory from '../../browser-history';
 
 const mapStateToProps = ({USER, DATA}: State) => ({
   authorizationStatus: USER.authorizationStatus,
@@ -32,42 +31,40 @@ function App(props: PropsFromRedux): JSX.Element {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={<WelcomeScreen errorsCount={MAX_MISTAKE_COUNT} />}
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<AuthScreen />}
-        />
-        <Route
-          path={AppRoute.Result}
-          element={
-            <PrivateRoute>
-              <WinScreen />
-            </PrivateRoute>
-            // onReplayButtonClick={() => history.push(AppRoute.Game)}
-          }
-        />
-        <Route
-          path={AppRoute.Lose}
-          element={<GameOverScreen />}
+    <Routes>
+      <Route
+        path={AppRoute.Root}
+        element={<WelcomeScreen errorsCount={MAX_MISTAKE_COUNT} />}
+      />
+      <Route
+        path={AppRoute.Login}
+        element={<AuthScreen />}
+      />
+      <Route
+        path={AppRoute.Result}
+        element={
+          <PrivateRoute>
+            <WinScreen />
+          </PrivateRoute>
           // onReplayButtonClick={() => history.push(AppRoute.Game)}
-        />
-        <Route
-          path={AppRoute.Game}
-          element={
-            <GameScreen />
-          }
-        />
-        <Route
-          path="*"
-          element={<NotFoundScreen />}
-        />
-      </Routes>
-    </BrowserRouter>
+        }
+      />
+      <Route
+        path={AppRoute.Lose}
+        element={<GameOverScreen />}
+        // onReplayButtonClick={() => history.push(AppRoute.Game)}
+      />
+      <Route
+        path={AppRoute.Game}
+        element={
+          <GameScreen />
+        }
+      />
+      <Route
+        path="*"
+        element={<NotFoundScreen />}
+      />
+    </Routes>
   );
 }
 
