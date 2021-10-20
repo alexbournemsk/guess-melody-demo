@@ -1,6 +1,10 @@
 import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 function WinScreen(): JSX.Element {
+  const history = useNavigate();
+
   return (
     <section className="result">
       <div className="result-logout__wrapper">
@@ -11,7 +15,13 @@ function WinScreen(): JSX.Element {
       </div>
       <h2 className="result__title">Вы настоящий меломан!</h2>
       <p className="result__total">Вы ответили правильно на 6 вопросов и совершили 2 ошибки</p>
-      <button className="replay" type="button">Сыграть ещё раз</button>
+      <button
+        onClick={() => history(AppRoute.Game)}
+        className="replay"
+        type="button"
+      >
+        Сыграть ещё раз
+      </button>
     </section>
   );
 }
