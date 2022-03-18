@@ -28,7 +28,7 @@ const ArtistQuestionScreen = () => {
           <div className="track">
             <button className="track__button track__button--play" type="button" />
             <div className="track__status">
-              <audio></audio>
+              <audio src="https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg"></audio>
             </div>
           </div>
         </div>
@@ -45,8 +45,8 @@ const ArtistQuestionScreen = () => {
           <div className="artist">
             <input className="artist__input visually-hidden" type="radio" name="answer" value="artist-2" id="answer-2" />
             <label className="artist__name" htmlFor="answer-2">
-              <img className="artist__picture" src="img/placeholder.jpg" alt="Краснознаменная дивизия имени моей бабушки" />
-              Краснознаменная дивизия имени моей бабушки
+              <img className="artist__picture" src="https://i.pravatar.cc/128" alt="Краснознаменная дивизия имени моей бабушки" />
+              Краснознаменная дивизия имени моей Бабушки
             </label>
           </div>
 
