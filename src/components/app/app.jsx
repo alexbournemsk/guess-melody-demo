@@ -11,7 +11,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const App = (props) => {
   const {errorsCount, questions} = props;
-  const [firstQuestion] = questions;
+  const [firstQuestion, secondQuestion] = questions;
 
   return (
     <BrowserRouter>
@@ -20,11 +20,18 @@ const App = (props) => {
           <WelcomeScreen errorsCount={errorsCount} />
         </Route>
         <Route exact path="/dev-artist">
-          <ArtistQuestionScreen />
+          <ArtistQuestionScreen
+            question = {secondQuestion}
+            onAnswer = {()=>{
+              console.log(`onAnswer`);
+            }}/>
         </Route>
         <Route exact path="/dev-genre">
           <GenreQuestionScreen
-            question = {firstQuestion}/>
+            question = {firstQuestion}
+            onAnswer = {(...params)=> {
+              console.log(params);
+            }}/>
         </Route>
         <Route exact path="/login">
           <AuthScreen />

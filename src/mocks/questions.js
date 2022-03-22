@@ -3,7 +3,7 @@ const AVATAR_URL = `https://i.pravatar.cc/128`;
 export default [
   {
     type: `genre`,
-    genre: `rock`,
+    genre: `jazz`,
     answers: [{
       src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
       genre: `rock`,

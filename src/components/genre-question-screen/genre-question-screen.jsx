@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import {GameType} from '../../const';
 
 const GenreQuestionScreen = (props) => {
-  const genre = props.question.genre;
-  const answers = props.question.answers;
-  // const {question} = props;
-  // const {answers, genre} = question;
+  const [userAnswers, setUserAnswers] = useState([false, false, false, false]);
+  const {question, onAnswer} = props;
+  const {answers, genre} = question;
 
   return (
     <section className="game game--genre">
@@ -31,16 +31,28 @@ const GenreQuestionScreen = (props) => {
 
       <section className="game__screen">
         <h2 className="game__title">Выберите {genre} треки</h2>
-        <form className="game__tracks">
+        <form className="game__tracks" onSubmit={(evt)=> {
+          evt.preventDefault();
+          onAnswer(question, userAnswers);
+
+
+        } }>
 
           {answers.map((answer, id) => (
-            <div key={`${id}-${answer.src}`}className="track">
+            <div key={`${id}-${answer.src}`} className="track">
               <button className="track__button track__button--play" type="button"></button>
               <div className="track__status">
                 <audio src = {answer.src}></audio>
               </div>
               <div className="game__answer">
-                <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${id}`} id={`answer-${id}`} />
+                <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${id}`}
+                  id={`answer-${id}`}
+                  checked={userAnswers[id]}
+                  onChange={(evt) => {
+                    const value = evt.target.checked;
+                    setUserAnswers([...userAnswers.slice(0, id), value, ...userAnswers.slice(id + 1)]);
+                  }}
+                />
                 <label className="game__check" htmlFor={`answer-${id}`}>Отметить</label>
               </div>
             </div>
@@ -58,6 +70,7 @@ const GenreQuestionScreen = (props) => {
 };
 
 GenreQuestionScreen.propTypes = {
+  onAnswer: PropTypes.func.isRequired,
   question: PropTypes.shape({
     answers: PropTypes.arrayOf(PropTypes.shape({
       src: PropTypes.string.isRequired,
