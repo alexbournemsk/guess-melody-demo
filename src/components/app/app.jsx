@@ -8,6 +8,7 @@ import AuthScreen from '../auth-screen/auth-screen';
 import GameOverScreen from '../game-over-screen/game-over-screen';
 import WinScreen from '../win-screen/win-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import GameScreen from '../game-screen/game-screen';
 
 const App = (props) => {
   const {errorsCount, questions} = props;
@@ -19,6 +20,14 @@ const App = (props) => {
         <Route exact path="/">
           <WelcomeScreen errorsCount={errorsCount} />
         </Route>
+
+        <Route exact path="/game">
+          <GameScreen
+            errorsCount={errorsCount}
+            questions={questions}
+          />
+        </Route>
+
         <Route exact path="/dev-artist">
           <ArtistQuestionScreen
             question = {secondQuestion}
